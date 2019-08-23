@@ -7,21 +7,25 @@ clean:
 	rm -rf ./hello-world/hello-world
 
 build:
-	GOOS=linux GOARCH=amd64 go build -o hello-world/hello-world ./hello-world
+	GOOS=linux GOARCH=amd64 go build -o line-diary/line-diary ./line-diary
+
+# 追加
+s3:
+	aws s3 mb s3://pomadev-line-diary --profile pomadev
 
 # 追加
 package:
 	sam package \
-	--template-file sam-app/template.yaml \
-	--output-template-file sam-app/output-template.yaml \
-	--s3-bucket template-store \
+	--template-file ./template.yaml \
+	--output-template-file ./output-template.yaml \
+	--s3-bucket pomadev-line-diary \
 	--profile pomadev
 
 # 追加
 deploy:
 	sam deploy \
-	--template-file sam-app/output-template.yaml \
-	--stack-name go-lambda \
+	--template-file ./output-template.yaml \
+	--stack-name line-diary \
 	--capabilities CAPABILITY_IAM \
 	--profile pomadev
 
