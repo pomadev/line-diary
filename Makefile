@@ -30,6 +30,7 @@ deploy:
 	--profile pomadev
 
 # 追加
+# TODO: dynamodb作成処理をtemplate.yamlに引っ越し
 dynamodb:
 	aws dynamodb create-table \
 	--table-name Diary \
