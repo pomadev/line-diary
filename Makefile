@@ -10,6 +10,7 @@ build:
 	GOOS=linux GOARCH=amd64 go build -o line-diary/line-diary ./line-diary
 
 # 追加
+# TODO: s3作成処理をtemplate.yamlに引っ越し？
 s3:
 	aws s3 mb s3://pomadev-line-diary --profile pomadev
 
