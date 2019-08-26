@@ -88,7 +88,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 						log.Printf("bot cannot reply message: %v", err)
 					}
 				} else {
-					if _, err = bot.ReplyMessage(e.ReplyToken, linebot.NewTextMessage(c.Content)).Do(); err != nil {
+					msg := fmt.Sprintf("%vの日記です\n\n%v", c.Date, c.Content)
+					if _, err = bot.ReplyMessage(e.ReplyToken, linebot.NewTextMessage(msg)).Do(); err != nil {
 						log.Printf("bot cannot reply message: %v", err)
 					}
 				}
