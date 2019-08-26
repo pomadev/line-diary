@@ -8,6 +8,7 @@ clean:
 
 build:
 	GOOS=linux GOARCH=amd64 go build -o line-diary/line-diary ./line-diary
+	GOOS=linux GOARCH=amd64 go build -o line-notify/line-notify ./line-notify
 
 # 追加
 # TODO: s3作成処理をtemplate.yamlに引っ越し？
