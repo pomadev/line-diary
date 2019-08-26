@@ -8,7 +8,14 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
+    Runtime: go1.x
     Timeout: 5
+    Environment:
+      Variables:
+        CHANNEL_SECRET: ""
+        CHANNEL_TOKEN: ""
+        DYNAMODB_REGION: "ap-northeast-1"
+        DYNAMODB_TABLE: "Diary"
 
 Resources:
   LineDiaryFunction:
@@ -16,7 +23,6 @@ Resources:
     Properties:
       CodeUri: line-diary/
       Handler: line-diary
-      Runtime: go1.x
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
       Events:
         CatchAll:
@@ -24,10 +30,17 @@ Resources:
           Properties:
             Path: /line
             Method: POST
-      Environment:
-        Variables:
-          CHANNEL_SECRET: ""
-          CHANNEL_TOKEN: ""
-          DYNAMODB_REGION: "ap-northeast-1"
-          DYNAMODB_TABLE: "Diary"
+      Policies: AmazonDynamoDBFullAccess
+
+  LineNotifyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: line-notify/
+      Handler: line-notify
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Schedule
+          Properties:
+            Schedule: cron(* 13 * * ? *)
       Policies: AmazonDynamoDBFullAccess
