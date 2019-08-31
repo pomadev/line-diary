@@ -42,5 +42,5 @@ Resources:
         CatchAll:
           Type: Schedule
           Properties:
-            Schedule: cron(* 13 * * ? *)
+            Schedule: cron(0 13 * * ? *)
       Policies: AmazonDynamoDBFullAccess
